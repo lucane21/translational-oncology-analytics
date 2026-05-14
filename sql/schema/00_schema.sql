@@ -1,0 +1,59 @@
+CREATE DATABASE patients_mutations;
+
+USE patients_mutations;
+
+CREATE TABLE patients (
+    PATIENT_ID VARCHAR(50) PRIMARY KEY,
+    SEX VARCHAR(50),
+    OS_STATUS VARCHAR(50),
+    ANCESTRY_LABEL VARCHAR(50), 
+    AGE_AT_DX DOUBLE, 
+    N_OTHER_CANCER_TYPES INT
+);
+
+CREATE TABLE samples (
+    SAMPLE_ID VARCHAR(50) PRIMARY KEY,
+    PATIENT_ID VARCHAR(50),
+    ONCOTREE_CODE VARCHAR(50),
+    SAMPLE_TYPE VARCHAR(50),
+    DISEASE_STATUS VARCHAR(50),
+    PRIMARY_SITE VARCHAR(50),
+    METASTATIC_SITE VARCHAR(50),
+    GENE_PANEL VARCHAR(50),
+	SAMPLE_COVERAGE INT,
+    MSI_SCORE DOUBLE,
+    MSI_TYPE VARCHAR(50),
+    SOMATIC_STATUS VARCHAR(50),
+    TMB_SCORE DOUBLE,
+	TUMOR_PURITY VARCHAR(50),
+    FACETS_PURITY DOUBLE,
+    FACETS_PLOIDY DOUBLE,
+	FACETS_WGD VARCHAR(50),
+	CANCER_TYPE VARCHAR(50),
+    CANCER_TYPE_DETAILED VARCHAR(100),
+    FOREIGN KEY (PATIENT_ID) REFERENCES patients(PATIENT_ID)
+);
+
+CREATE TABLE mutations (
+    mutation_id INT AUTO_INCREMENT PRIMARY KEY,
+	Hugo_Symbol VARCHAR(50),
+    Entrez_Gene_Id DOUBLE,
+    NCBI_Build VARCHAR(50),
+    Chromosome VARCHAR(50),
+    Start_Position BIGINT,
+    End_Position BIGINT,
+    Consequence VARCHAR(100),
+	Variant_Classification VARCHAR(100),
+    Variant_Type VARCHAR(50),
+    Reference_Allele VARCHAR(50),
+	Tumor_Seq_Allele1 VARCHAR(50),
+    Tumor_Seq_Allele2 VARCHAR(50),
+    Tumor_Sample_Barcode VARCHAR(50),
+	Mutation_Status VARCHAR(50),
+	t_ref_count VARCHAR(50),
+    t_alt_count INT,
+    t_depth INT,
+	HGVSp_Short VARCHAR(100),
+    Exon_Number VARCHAR(50),
+    FOREIGN KEY (Tumor_Sample_Barcode) REFERENCES samples(SAMPLE_ID)
+);
